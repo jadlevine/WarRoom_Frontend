@@ -10,12 +10,11 @@ const Game = () => {
   const [fetchGame, setFetchGame] = useState(true)
 
   const getGameDetails = async () => {
-    const game = await GetGame(game_id)
+    const response = await GetGame(game_id)
     // let countryArr = []
-
     // console.log(game.countries)
     // console.log(typeof game.countries)
-    setGame(game)
+    setGame(response)
   }
 
   useEffect(() => {
@@ -55,8 +54,8 @@ const Game = () => {
             </div>
           </div>
           <div id="countries">
-            {game.countries.map((countryData) => (
-              <Country key={countryData.id} countryData={countryData} />
+            {game.countries?.map((country) => (
+              <Country key={country.id} country={country} />
             ))}
           </div>
         </div>

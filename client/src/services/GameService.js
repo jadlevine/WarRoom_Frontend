@@ -14,9 +14,9 @@ export const GetAllGames = async () => {
     const res = await Client.get('/games')
     const gameArr = []
     // console.log(res.data)
-    for (const game in res.data) {
+    for (const i in res.data) {
       // console.log(res.data[game])
-      gameArr.push(res.data[game])
+      gameArr.push(res.data[i])
     }
     // console.log(typeof gameArr)
     return gameArr
@@ -30,8 +30,8 @@ export const GetGame = async (game_id) => {
     const res = await Client.get(`/games/${game_id}`)
     const game = res.data
     let countryArr = []
-    for (const country in game.countries) {
-      countryArr.push(game.countries[country])
+    for (const i in game.countries) {
+      countryArr.push(game.countries[i])
     }
     game.countries = countryArr
     return game
