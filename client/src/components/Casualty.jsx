@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { AddNewCasualty } from "../services/CasualtyService"
+import { AddNewCasualty, DeleteCasualty } from "../services/CasualtyService"
 
 const Casualty = ({casualty, casualtyTotal, setCasualtyTotal, game, country, setFetchGame}) => {
 
@@ -18,11 +18,13 @@ const Casualty = ({casualty, casualtyTotal, setCasualtyTotal, game, country, set
     //re fetch the game (eventually, refactor to just refetch the country)
     setFetchGame(true)
   }
-  const removeCasualty = () => {
+  const removeCasualty = async () => {
     setCount(count-1)
     // update total Casualty Points
     setCasualtyTotal(casualtyTotal - casualty.value)
     // db calls
+    let response = await DeleteCasualty(casualty.unitType, country.id)
+    setFetchGame(true)
     // delete casualty (find most recent of country and unitType)
     // updated casualtyTotalValue for country
   }
