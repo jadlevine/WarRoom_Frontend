@@ -14,8 +14,12 @@ body{
 .clickable:hover{
   color: rgb(98,137,231);
   cursor: pointer;
-
 }
+.summary-item{
+  border: 1pt solid black;
+  margin: .5rem;
+}
+
 
 /* testing */
 .bgp{
@@ -100,10 +104,7 @@ body{
 }
 
 /* Casualty Component */
-.casualty-box{
-  border: 1pt solid black;
-  margin: .5rem;
-}
+
 /* ______ Page */
 /* ______ Page */
 /* ______ Page */

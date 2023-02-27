@@ -55,7 +55,12 @@ const Game = () => {
           </div>
           <div id="countries">
             {game.countries?.map((country) => (
-              <Country key={country.id} country={country} />
+              <Country
+                key={country.id}
+                country={country}
+                game={game}
+                setFetchGame={setFetchGame}
+              />
             ))}
           </div>
         </div>

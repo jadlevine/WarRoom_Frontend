@@ -1,28 +1,35 @@
 import { useState } from "react"
+import { AddNewCasualty } from "../services/CasualtyService"
 
-
-const Casualty = ({casualty, casualtyTotal, setCasualtyTotal}) => {
+const Casualty = ({casualty, casualtyTotal, setCasualtyTotal, game, country, setFetchGame}) => {
 
   const [count, setCount] = useState(0)
   
 
-  const addCasualty = () => {
-    // call db to add (need unitType and roundOccurred, and countryId)
+  const addCasualty = async () => {
+    
     setCount(count+1)
     // update total Casualty Points
     setCasualtyTotal(casualtyTotal + casualty.value)
-    //send updated casualtyTotalValue to db for country
+    // db calls
+    // add new casualty (need unitType and roundOccurred, and countryId)
+    let response = await AddNewCasualty(casualty.unitType, country.id, game.roundNum)
+    // updated casualtyTotalValue for country // => THIS IS HANDLED ON BACKEND
+    //re fetch the game (eventually, refactor to just refetch the country)
+    setFetchGame(true)
   }
   const removeCasualty = () => {
-    // call db to delete (find most recent of country and unitType)
     setCount(count-1)
     // update total Casualty Points
     setCasualtyTotal(casualtyTotal - casualty.value)
+    // db calls
+    // delete casualty (find most recent of country and unitType)
+    // updated casualtyTotalValue for country
   }
 
 
   return (
-    <div className="casualty-box">
+    <div className="summary-item">
       <div>{casualty.unitType}</div>
       <div>Points: {casualty.value}</div>
       <div>Number Sustained: {count}</div>

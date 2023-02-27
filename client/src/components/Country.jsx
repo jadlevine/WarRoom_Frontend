@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Casualty from "./Casualty"
 
 
-const Country = ({country}) => {
+const Country = ({country, game, setFetchGame}) => {
 
   const [casualtyTotal, setCasualtyTotal] = useState(country.casualtyTotalValue)
 
@@ -42,6 +42,7 @@ const Country = ({country}) => {
     country.moralePenalty = penalty
   }
 
+
   return (
     <div>
       {!country ? (
@@ -52,7 +53,7 @@ const Country = ({country}) => {
         <div className="country-container">
           <div className="country-summary">
             <h3>{country.name}</h3>
-            <div>
+            <div className="summary-item">
               <div>Stress</div>
               <div>{country.stressLevel}</div>
               <div>
@@ -60,7 +61,7 @@ const Country = ({country}) => {
                 <button>-</button>
               </div>
             </div>
-            <div>
+            <div className="summary-item">
               <div>Medals</div>
               <div>{country.medalCount}</div>
               <div>
@@ -68,7 +69,7 @@ const Country = ({country}) => {
                 <button>-</button>
               </div>
             </div>
-            <div>
+            <div className="summary-item">
               <div>Consumer Goods</div>
               <div>{country.consumerGoodsCount}</div>
               <div>
@@ -76,17 +77,17 @@ const Country = ({country}) => {
                 <button>-</button>
               </div>
             </div>
-            <div>
+            <div className="summary-item">
               <div>Morale Penalty</div>
               <div>{country.moralePenalty}</div>
               <div>Stress After Morale Penalty: {calculateStressAfterMoralePenalty()}</div>
+              <div>Morale Trigger Point: {country.moraleTriggerPoint}</div>
             </div>
-            <div>Morale Trigger Point: {country.moraleTriggerPoint}</div>
           </div>
           <div className="casualty-tracker">
             <div>Total Casualty Points: {casualtyTotal}</div>
             {casualtyTypes.map((type) => (
-              <Casualty key={type.unitType} casualty={type} setCasualtyTotal={setCasualtyTotal} casualtyTotal={casualtyTotal} />
+              <Casualty key={type.unitType} casualty={type} setCasualtyTotal={setCasualtyTotal} casualtyTotal={casualtyTotal} game={game} country={country} setFetchGame={setFetchGame}/>
             ))}
             <div></div>
           </div>
