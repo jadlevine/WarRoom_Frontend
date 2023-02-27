@@ -15,9 +15,33 @@ body{
   color: rgb(98,137,231);
   cursor: pointer;
 }
-.summary-item{
+.border{
   border: 1pt solid black;
   margin: .5rem;
+  padding: .5rem;
+}
+.container{
+  margin: 1rem;
+  padding: 1rem;
+}
+.red{
+  color: red;
+  font-weight: bold;
+}
+.smaller{
+  font-size: smaller;
+}
+.xx-small{
+  font-size: xx-small;
+}
+.large{
+  font-size:large;
+}
+.xx-large{
+  font-size:xx-large;
+}
+.right-align{
+  text-align: end;
 }
 
 
@@ -92,13 +116,67 @@ body{
 /* Welcome Page */
 
 
-/* ______ Page */
+/* Game Page */
+#game-details-container{
+  background-color: blueviolet;
+}
+#casualty-to-stress-container{
+  background-color: green;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.c-to-s-conversion-box{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.stress-area{
+  display: grid;
+  grid-template-rows: 1fr 4fr;
+}
+.flags-and-casualty-range-area{
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+}
+.flag-area{
+  display: grid;
+  grid-template: repeat(3, 1fr)/repeat(3, 1fr);
+}
+.flag-box{
+  width: 1.5rem;
+}
+.c-to-s-1{
+  grid-area: 1/1;
+}
+.c-to-s-2{
+  grid-area: 1/2;
+}
+.c-to-s-3{
+  grid-area: 1/3;
+}
+.c-to-s-4{
+  grid-area: 2/1;
+}
+.c-to-s-5{
+  grid-area: 2/2;
+}
+.c-to-s-6{
+  grid-area: 2/3;
+}
+.c-to-s-7{
+  grid-area: 3/1;
+}
+
+.casualty-range-area{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+
+
 
 /* Country Component */
 .country-container{
   background-color: blue;
-  margin: 1rem;
-  padding: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }

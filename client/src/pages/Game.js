@@ -2,15 +2,21 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { GetGame } from '../services/GameService'
 import Country from '../components/Country'
+import CasualtyToStressConversionChart from '../components/CasualtyToStressConversionChart'
 
 const Game = () => {
   let { game_id } = useParams()
 
   const [game, setGame] = useState({})
   const [fetchGame, setFetchGame] = useState(true)
+  const [casualtyLevels, setCasualtyLevels] = useState([])
 
   const getGameDetails = async () => {
     const response = await GetGame(game_id)
+    // let casualtyLevelsTemp = []
+    // response.countries.map((country)=>(
+    //   casualtyLevelsTemp.push({"name": country.name, "casualtyTotalValue": country.casualtyTotalValue})
+    // ))
     // let countryArr = []
     // console.log(game.countries)
     // console.log(typeof game.countries)
@@ -30,7 +36,7 @@ const Game = () => {
         </div>
       ) : (
         <div>
-          <div id="game-details">
+          <div id="game-details-container" className="container">
             <h2>Game Details</h2>
             <div>Game ID: {game.id}</div>
             <div>Name: {game.name}</div>
@@ -53,6 +59,7 @@ const Game = () => {
               </div>
             </div>
           </div>
+          <CasualtyToStressConversionChart countries={game.countries} />
           <div id="countries">
             {game.countries?.map((country) => (
               <Country

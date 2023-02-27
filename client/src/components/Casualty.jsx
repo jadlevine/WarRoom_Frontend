@@ -31,7 +31,7 @@ const Casualty = ({casualty, casualtyTotal, setCasualtyTotal, game, country, set
 
 
   return (
-    <div className="summary-item">
+    <div className="border">
       <div>{casualty.unitType}</div>
       <div>Points: {casualty.value}</div>
       <div>Number Sustained: {count}</div>

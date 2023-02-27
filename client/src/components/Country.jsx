@@ -50,10 +50,10 @@ const Country = ({country, game, setFetchGame}) => {
           <h2>Fetching Country Data</h2>
         </div>
       ) : (
-        <div className="country-container">
+        <div className="country-container container">
           <div className="country-summary">
             <h3>{country.name}</h3>
-            <div className="summary-item">
+            <div className="border">
               <div>Stress</div>
               <div>{country.stressLevel}</div>
               <div>
@@ -61,7 +61,7 @@ const Country = ({country, game, setFetchGame}) => {
                 <button>-</button>
               </div>
             </div>
-            <div className="summary-item">
+            <div className="border">
               <div>Medals</div>
               <div>{country.medalCount}</div>
               <div>
@@ -69,7 +69,7 @@ const Country = ({country, game, setFetchGame}) => {
                 <button>-</button>
               </div>
             </div>
-            <div className="summary-item">
+            <div className="border">
               <div>Consumer Goods</div>
               <div>{country.consumerGoodsCount}</div>
               <div>
@@ -77,7 +77,7 @@ const Country = ({country, game, setFetchGame}) => {
                 <button>-</button>
               </div>
             </div>
-            <div className="summary-item">
+            <div className="border">
               <div>Morale Penalty</div>
               <div>{country.moralePenalty}</div>
               <div>Stress After Morale Penalty: {calculateStressAfterMoralePenalty()}</div>
