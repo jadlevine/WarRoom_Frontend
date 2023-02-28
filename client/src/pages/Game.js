@@ -9,18 +9,30 @@ const Game = () => {
 
   const [game, setGame] = useState({})
   const [fetchGame, setFetchGame] = useState(true)
-  const [casualtyLevels, setCasualtyLevels] = useState([])
 
   const getGameDetails = async () => {
     const response = await GetGame(game_id)
-    // let casualtyLevelsTemp = []
-    // response.countries.map((country)=>(
-    //   casualtyLevelsTemp.push({"name": country.name, "casualtyTotalValue": country.casualtyTotalValue})
-    // ))
-    // let countryArr = []
-    // console.log(game.countries)
-    // console.log(typeof game.countries)
     setGame(response)
+  }
+
+  const endBattlePhase = () => {
+    console.log('battle phase end requested')
+    // maybe give a popup confirm button, to let user know what happens (confirm to convert casualty points to stress points ... then, it happening "automatically" won't be as confusing)
+
+    // for each country,
+    // // front end
+    // convert casualty points to stress points
+    // increase stress level
+    // Set Total Casualty Points = 0
+    // // this SHOULD automatically reset the flags/country names to 0 on the StressToCasualtyConversionChart
+    // set number sustained for each casualty type = 0
+    // // backend
+    // send a put request to update the country
+
+    //once all countries are updated, setFetchGame(true) to grab updated details from backend
+  }
+  const endMoralePhase = () => {
+    console.log('morale phase end requested')
   }
 
   useEffect(() => {
@@ -37,26 +49,53 @@ const Game = () => {
       ) : (
         <div>
           <div id="game-details-container" className="container">
-            <h2>Game Details</h2>
-            <div>Game ID: {game.id}</div>
-            <div>Name: {game.name}</div>
-            <div>Created At: {game.date}</div>
-            <div>Scenario: {game.scenario}</div>
-            <br></br>
-            <div>
-              <div>Round</div>
-              <div id="roundNum">{game.roundNum}</div>
-            </div>
-            <div>
-              <div>Phase</div>
-              <div>
-                <div id="battle">
-                  Battle: {game.battlePhase ? 'true' : 'false'}
-                </div>
-                <div id="morale">
-                  Morale: {game.moralePhase ? 'true' : 'false'}
-                </div>
+            <div className="game-summary">
+              <div className="header">Game Info</div>
+              <div className="game-summary-info">
+                <div className="right-align">Game ID:</div>
+                <div className="left-align">{game.id}</div>
+                <div className="right-align">Game Title:</div>
+                <div className="left-align">{game.name}</div>
+                <div className="right-align">Scenario:</div>
+                <div className="left-align">{game.scenario}</div>
+                {/* <div>Created At:</div><div>{game.date}</div> */}
               </div>
+            </div>
+            <div className="round-tracker">
+              <div className="header">Round</div>
+              <div id="roundNum" className="xx-large">
+                {game.roundNum}
+              </div>
+            </div>
+            <div className="phase-tracker">
+              <div className="header">Phase</div>
+              <div className="phase-track">
+                {game.battlePhase ? (
+                  <div className="xx-large">BATTLE</div>
+                ) : game.moralePhase ? (
+                  <div className="xx-large">MORALE</div>
+                ) : (
+                  <div>No Phase Selected</div>
+                )}
+              </div>
+              {game.battlePhase ? (
+                <button id="end-battle-button" onClick={endBattlePhase}>
+                  End Battle Phase
+                </button>
+              ) : (
+                <button disabled id="end-battle-button">
+                  End Battle Phase
+                </button>
+              )}
+              {game.moralePhase ? (
+                <button id="end-morale-button" onClick={endMoralePhase}>
+                  End Morale Phase
+                </button>
+              ) : (
+                <button disabled id="end-morale-button">
+                  End Morale Phase
+                </button>
+              )}
             </div>
           </div>
           <CasualtyToStressConversionChart countries={game.countries} />

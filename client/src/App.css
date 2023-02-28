@@ -24,6 +24,11 @@ body{
   margin: 1rem;
   padding: 1rem;
 }
+.header{
+  text-decoration: underline;
+  font-weight: bold;
+  font-size: larger;
+}
 .red{
   color: red;
   font-weight: bold;
@@ -42,6 +47,10 @@ body{
 }
 .right-align{
   text-align: end;
+}
+.left-align{
+  text-align: start;
+  margin: 0 0 0 .75rem;
 }
 
 
@@ -119,7 +128,36 @@ body{
 /* Game Page */
 #game-details-container{
   background-color: blueviolet;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
+.game-summary-info{
+  display: grid;
+  grid-template: repeat(3, 1fr)/repeat(2, 1fr);
+}
+.round-tracker{
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+}
+#roundNum{
+  grid-area: 2/1/4/2;
+  align-self: center;  
+}
+.phase-tracker{
+  display: grid;
+  grid-template: repeat(3, 1fr)/repeat(2, 1fr);
+}
+.phase-track{
+grid-area: 2/1/4/2;
+align-self: center;
+}
+#end-battle-button{
+  grid-area: 2/2/3/3;
+}
+#end-morale-button{
+  grid-area: 3/2/4/3;
+}
+
 #casualty-to-stress-container{
   background-color: green;
   display: grid;
