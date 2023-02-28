@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import Casualty from "./Casualty"
-
+import { UpdateCountry } from "../services/CountryService"
 
 const Country = ({country, game, setFetchGame}) => {
 
@@ -42,6 +42,30 @@ const Country = ({country, game, setFetchGame}) => {
     country.moralePenalty = penalty
   }
 
+  const handleClick = async (increaseOrDecrease, field) => {
+    // e.preventDefault()
+    
+    // YOU ARE HERE //
+    // this is broken now :(
+
+    console.log(`${increaseOrDecrease} ${field}`)
+    if (increaseOrDecrease === "increase") {
+      console.log(country[field])
+      country[field]++
+      console.log(country[field])
+    } else if (increaseOrDecrease === "decrease") {
+      console.log(country[field])
+      country[field]--
+      console.log(country[field])
+    }
+
+    // YOU ARE HERE //
+    //update the db
+    let res = await UpdateCountry(country)
+    //upon successful db update, update the dom
+    setFetchGame(true)
+  }
+
 
   return (
     <div>
@@ -57,24 +81,24 @@ const Country = ({country, game, setFetchGame}) => {
               <div>Stress</div>
               <div>{country.stressLevel}</div>
               <div>
-                <button>+</button>
-                <button>-</button>
+                <button onClick={() => handleClick("increase", "stressLevel")}>+</button>
+                <button onClick={() => handleClick("decrease", "stressLevel")}>-</button>
               </div>
             </div>
             <div className="border">
               <div>Medals</div>
               <div>{country.medalCount}</div>
               <div>
-                <button>+</button>
-                <button>-</button>
+                <button onClick={() => handleClick("increase", "medalCount")}>+</button>
+                <button onClick={() => handleClick("decrease", "medalCount")}>-</button>
               </div>
             </div>
             <div className="border">
               <div>Consumer Goods</div>
               <div>{country.consumerGoodsCount}</div>
               <div>
-                <button>+</button>
-                <button>-</button>
+                <button onClick={() => handleClick("increase", "consumerGoodsCount")}>+</button>
+                <button onClick={() => handleClick("decrease", "consumerGoodsCount")}>-</button>
               </div>
             </div>
             <div className="border">
