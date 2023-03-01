@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { AddNewCasualty, DeleteCasualty } from "../services/CasualtyService"
 
-const Casualty = ({casualty, casualtyRoundTotal, setCasualtyRoundTotal, roundNum, country, setFetchGame, casualtyReset, setCasualtyReset}) => {
+const Casualty = ({casualty, casualtyRoundTotal, setCasualtyRoundTotal, roundNum, battlePhase, moralePhase, country, setFetchGame, casualtyReset, setCasualtyReset}) => {
 
   const [count, setCount] = useState(0)
   
@@ -43,8 +43,8 @@ useEffect(() => {
       <div>{casualty.unitType}</div>
       <div>Points: {casualty.value}</div>
       <div>Number Sustained: {count}</div>
-      <button onClick={() => addCasualty()}>+</button>
-      <button disabled={count === 0} onClick={() => removeCasualty()}>-</button>
+      <button disabled={!battlePhase} onClick={() => addCasualty()}>+</button>
+      <button disabled={count === 0 || !battlePhase} onClick={() => removeCasualty()}>-</button>
       
     </div>
   )

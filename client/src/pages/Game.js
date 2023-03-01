@@ -155,6 +155,8 @@ const Game = () => {
                 key={country.id}
                 country={country}
                 roundNum={game.roundNum}
+                battlePhase={game.battlePhase}
+                moralePhase={game.moralePhase}
                 setFetchGame={setFetchGame}
                 casualtyReset={casualtyReset}
                 setCasualtyReset={setCasualtyReset}

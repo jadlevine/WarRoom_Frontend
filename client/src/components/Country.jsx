@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import Casualty from "./Casualty"
 import { UpdateCountry } from "../services/CountryService"
 
-const Country = ({country, roundNum, setFetchGame, casualtyReset, setCasualtyReset}) => {
+const Country = ({country, roundNum, battlePhase, moralePhase, setFetchGame, casualtyReset, setCasualtyReset}) => {
 
   // to do: should country component make it's own db get requests, and keep it's own country useState?
   // // or is it ok to just let the fetchGame functionality do it's job and pass country data down from game data?
@@ -46,7 +46,7 @@ const Country = ({country, roundNum, setFetchGame, casualtyReset, setCasualtyRes
     country.moralePenalty = penalty
   }
 
-  const handleClick = async (increaseOrDecrease, field) => {
+  const handleClick = async (increaseOrDecrease, field, goal) => {
     let countryRequest = {
       id: country.id, // never updated, but used to find country record on backend
       casualtyTotalValue: country.casualtyTotalValue,
@@ -55,12 +55,17 @@ const Country = ({country, roundNum, setFetchGame, casualtyReset, setCasualtyRes
       consumerGoodsCount: country.consumerGoodsCount,
       moralePenalty: country.moralePenalty
     }
-
-    if (increaseOrDecrease === "increase") {
-      countryRequest[field]++
-    } else if (increaseOrDecrease === "decrease") {
+    if (goal === "reduceStress") {
       countryRequest[field]--
+      countryRequest.stressLevel--
+    } else {
+      if (increaseOrDecrease === "increase") {
+        countryRequest[field]++
+      } else if (increaseOrDecrease === "decrease") {
+        countryRequest[field]--
+      }
     }
+
 
     // send update country request to backend
     UpdateCountry(countryRequest)
@@ -89,24 +94,27 @@ const Country = ({country, roundNum, setFetchGame, casualtyReset, setCasualtyRes
               <div>Stress</div>
               <div>{country.stressLevel}</div>
               <div>
-                <button onClick={() => handleClick("increase", "stressLevel")}>+</button>
-                <button onClick={() => handleClick("decrease", "stressLevel")}>-</button>
+                <button disabled={!battlePhase} onClick={() => handleClick("increase", "stressLevel")}>+</button>
+                <button disabled={!battlePhase} onClick={() => handleClick("decrease", "stressLevel")}>-</button>
               </div>
             </div>
             <div className="border">
               <div>Medals</div>
               <div>{country.medalCount}</div>
               <div>
-                <button onClick={() => handleClick("increase", "medalCount")}>+</button>
-                <button onClick={() => handleClick("decrease", "medalCount")}>-</button>
+                <button disabled={!battlePhase} onClick={() => handleClick("increase", "medalCount")}>+</button>
+                <button disabled={!battlePhase || country.medalCount === 0} onClick={() => handleClick("decrease", "medalCount")}>-</button>
+                <button disabled={!moralePhase || country.medalCount === 0 || country.stressLevel === 0} onClick={() => handleClick("decrease", "medalCount", "reduceStress")}>Spend Medal to reduce Stress</button>
+
               </div>
             </div>
             <div className="border">
               <div>Consumer Goods</div>
               <div>{country.consumerGoodsCount}</div>
               <div>
-                <button onClick={() => handleClick("increase", "consumerGoodsCount")}>+</button>
-                <button onClick={() => handleClick("decrease", "consumerGoodsCount")}>-</button>
+                <button disabled={!moralePhase} onClick={() => handleClick("increase", "consumerGoodsCount")}>+</button>
+                <button disabled={!moralePhase || country.consumerGoodsCount === 0} onClick={() => handleClick("decrease", "consumerGoodsCount")}>-</button>
+                <button disabled={!moralePhase || country.consumerGoodsCount === 0 || country.stressLevel === 0} onClick={() => handleClick("decrease", "consumerGoodsCount", "reduceStress")}>Spend Consumer Good to reduce Stress</button>
               </div>
             </div>
             <div className="border">
@@ -125,6 +133,8 @@ const Country = ({country, roundNum, setFetchGame, casualtyReset, setCasualtyRes
                 setCasualtyRoundTotal={setCasualtyRoundTotal}
                  casualtyRoundTotal={casualtyRoundTotal}
                  roundNum={roundNum}
+                 battlePhase={battlePhase}
+                 moralePhase={moralePhase}
                  country={country}
                  setFetchGame={setFetchGame}
                  casualtyReset={casualtyReset}
