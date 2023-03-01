@@ -3,12 +3,18 @@ import { useParams } from 'react-router-dom'
 import { GetGame } from '../services/GameService'
 import Country from '../components/Country'
 import CasualtyToStressConversionChart from '../components/CasualtyToStressConversionChart'
+import { UpdateCountry } from '../services/CountryService'
+import { UpdateGame } from '../services/GameService'
 
 const Game = () => {
+  // to do: does it make sense to only keep game specific fields in the game useState? i.e., not keeping nested country and casualty lists? chrome dev tools inspecting components is sluggist. perhaps it's because game useState is holding too much data.
+  // if this is changed, (at least) countries and (probably also) casualties would need to be making their own backend get requests and maintaining their respective useStates.
+
   let { game_id } = useParams()
 
   const [game, setGame] = useState({})
   const [fetchGame, setFetchGame] = useState(true)
+  const [casualtyReset, setCasualtyReset] = useState(false)
 
   const getGameDetails = async () => {
     const response = await GetGame(game_id)
@@ -16,23 +22,67 @@ const Game = () => {
   }
 
   const endBattlePhase = () => {
-    console.log('battle phase end requested')
-    // maybe give a popup confirm button, to let user know what happens (confirm to convert casualty points to stress points ... then, it happening "automatically" won't be as confusing)
+    // conversion values to be used to convert casualty points to stress points
+    const conversionValues = [
+      [0, 0, 18],
+      [1, 20, 34],
+      [2, 36, 50],
+      [3, 52, 68],
+      [4, 70, 88],
+      [5, 90, 108],
+      [6, 110, Number.MAX_SAFE_INTEGER]
+    ]
 
-    // for each country,
-    // // front end
-    // convert casualty points to stress points
-    // increase stress level
-    // Set Total Casualty Points = 0
-    // // this SHOULD automatically reset the flags/country names to 0 on the StressToCasualtyConversionChart
-    // set number sustained for each casualty type = 0
-    // // backend
-    // send a put request to update the country
+    // for each country, convert casualty to stress, and then sned update request to back end
+    for (let country of game.countries) {
+      // compute casualty to stress conversion
+      let casualty = country.casualtyTotalValue
+      let addedStress = -1
+      conversionValues.forEach((conversion) => {
+        if (casualty >= conversion[1] && casualty <= conversion[2]) {
+          addedStress = conversion[0]
+        }
+      })
+      // error catching for development only
+      if (addedStress < 0 || addedStress > 6) {
+        window.alert('invalid casualty to stress conversion')
+        return
+      }
 
-    //once all countries are updated, setFetchGame(true) to grab updated details from backend
-  }
+      let countryRequest = {
+        id: country.id, // never updated, but used to find country record on backend
+        casualtyTotalValue: 0, // UPDATED
+        stressLevel: country.stressLevel + addedStress, // UPDATED
+        medalCount: country.medalCount, // not updated here
+        consumerGoodsCount: country.consumerGoodsCount, // not updated here
+        moralePenalty: country.moralePenalty // not updated here
+      }
+
+      // send update country request to backend
+      UpdateCountry(countryRequest)
+    } // end of country for loop
+
+    // Game updates
+    let gameRequest = {
+      id: game.id, // never updated, but used to find game record on backend
+      roundNum: game.roundNum, // not updated here
+      battlePhase: false, // UPDATED
+      moralePhase: true // UPDATED
+    }
+    // send update game request to backend
+    UpdateGame(gameRequest)
+
+    // refresh the data, clean-up and re-render the UI
+    setCasualtyReset(true)
+    setFetchGame(true)
+  } // end of endBattlePhase
+
   const endMoralePhase = () => {
-    console.log('morale phase end requested')
+    game.battlePhase = true
+    game.moralePhase = false
+    game.roundNum++
+    UpdateGame(game)
+    setFetchGame(true)
   }
 
   useEffect(() => {
@@ -104,8 +154,10 @@ const Game = () => {
               <Country
                 key={country.id}
                 country={country}
-                game={game}
+                roundNum={game.roundNum}
                 setFetchGame={setFetchGame}
+                casualtyReset={casualtyReset}
+                setCasualtyReset={setCasualtyReset}
               />
             ))}
           </div>

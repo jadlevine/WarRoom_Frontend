@@ -39,3 +39,11 @@ export const GetGame = async (game_id) => {
     throw error
   }
 }
+
+export const UpdateGame = async (gameRequest) => {
+  try {
+    const res = await Client.put(`/games/update`, gameRequest)
+  } catch (error) {
+    throw error
+  }
+}

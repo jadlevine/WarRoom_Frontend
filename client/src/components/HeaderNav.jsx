@@ -8,8 +8,8 @@ const HeaderNav = () => {
   const notCurrentPath = 'nav-option clickable'
 
   return (
-    <div id="header">
-      <div id="header-title">WAR ROOM</div>
+    <div id="nav-bar">
+      <div id="nav-title">WAR ROOM</div>
       <div id="nav-options">
         <Link to="/" className={location.pathname==='/'?currentPath:notCurrentPath}>Home</Link>
       </div>

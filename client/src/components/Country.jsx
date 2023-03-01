@@ -2,9 +2,13 @@ import { useEffect, useState } from "react"
 import Casualty from "./Casualty"
 import { UpdateCountry } from "../services/CountryService"
 
-const Country = ({country, game, setFetchGame}) => {
+const Country = ({country, roundNum, setFetchGame, casualtyReset, setCasualtyReset}) => {
 
-  const [casualtyTotal, setCasualtyTotal] = useState(country.casualtyTotalValue)
+  // to do: should country component make it's own db get requests, and keep it's own country useState?
+  // // or is it ok to just let the fetchGame functionality do it's job and pass country data down from game data?
+
+
+  const [casualtyRoundTotal, setCasualtyRoundTotal] = useState(0)
 
   let casualtyTypes = [
     {"unitType": "Infantry","value":2},
@@ -43,29 +47,33 @@ const Country = ({country, game, setFetchGame}) => {
   }
 
   const handleClick = async (increaseOrDecrease, field) => {
-    // e.preventDefault()
-    
-    // YOU ARE HERE //
-    // this is broken now :(
-
-    console.log(`${increaseOrDecrease} ${field}`)
-    if (increaseOrDecrease === "increase") {
-      console.log(country[field])
-      country[field]++
-      console.log(country[field])
-    } else if (increaseOrDecrease === "decrease") {
-      console.log(country[field])
-      country[field]--
-      console.log(country[field])
+    let countryRequest = {
+      id: country.id, // never updated, but used to find country record on backend
+      casualtyTotalValue: country.casualtyTotalValue,
+      stressLevel: country.stressLevel, 
+      medalCount: country.medalCount,
+      consumerGoodsCount: country.consumerGoodsCount,
+      moralePenalty: country.moralePenalty
     }
 
-    // YOU ARE HERE //
-    //update the db
-    let res = await UpdateCountry(country)
-    //upon successful db update, update the dom
+    if (increaseOrDecrease === "increase") {
+      countryRequest[field]++
+    } else if (increaseOrDecrease === "decrease") {
+      countryRequest[field]--
+    }
+
+    // send update country request to backend
+    UpdateCountry(countryRequest)
+
+    // refresh the data, re-render the UI
     setFetchGame(true)
   }
 
+  useEffect(() => {
+    setCasualtyRoundTotal(0)
+    setCasualtyReset(false)
+  
+  }, [casualtyReset])
 
   return (
     <div>
@@ -109,9 +117,19 @@ const Country = ({country, game, setFetchGame}) => {
             </div>
           </div>
           <div className="casualty-tracker">
-            <div>Total Casualty Points: {casualtyTotal}</div>
+            <div>Total Casualty Points: {casualtyRoundTotal}</div>
             {casualtyTypes.map((type) => (
-              <Casualty key={type.unitType} casualty={type} setCasualtyTotal={setCasualtyTotal} casualtyTotal={casualtyTotal} game={game} country={country} setFetchGame={setFetchGame}/>
+              <Casualty
+                key={type.unitType}
+                casualty={type}
+                setCasualtyRoundTotal={setCasualtyRoundTotal}
+                 casualtyRoundTotal={casualtyRoundTotal}
+                 roundNum={roundNum}
+                 country={country}
+                 setFetchGame={setFetchGame}
+                 casualtyReset={casualtyReset}
+                 setCasualtyReset={setCasualtyReset}
+              />
             ))}
             <div></div>
           </div>

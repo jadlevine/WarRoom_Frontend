@@ -1,34 +1,42 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { AddNewCasualty, DeleteCasualty } from "../services/CasualtyService"
 
-const Casualty = ({casualty, casualtyTotal, setCasualtyTotal, game, country, setFetchGame}) => {
+const Casualty = ({casualty, casualtyRoundTotal, setCasualtyRoundTotal, roundNum, country, setFetchGame, casualtyReset, setCasualtyReset}) => {
 
   const [count, setCount] = useState(0)
   
 
   const addCasualty = async () => {
-    
     setCount(count+1)
+
     // update total Casualty Points
-    setCasualtyTotal(casualtyTotal + casualty.value)
-    // db calls
-    // add new casualty (need unitType and roundOccurred, and countryId)
-    let response = await AddNewCasualty(casualty.unitType, country.id, game.roundNum)
-    // updated casualtyTotalValue for country // => THIS IS HANDLED ON BACKEND
-    //re fetch the game (eventually, refactor to just refetch the country)
+    setCasualtyRoundTotal(casualtyRoundTotal + casualty.value)
+
+    // send post request to backend
+    let response = await AddNewCasualty(casualty.unitType, country.id, roundNum)
+    
+    // refresh the data, re-render the UI
     setFetchGame(true)
-  }
-  const removeCasualty = async () => {
-    setCount(count-1)
-    // update total Casualty Points
-    setCasualtyTotal(casualtyTotal - casualty.value)
-    // db calls
-    let response = await DeleteCasualty(casualty.unitType, country.id)
-    setFetchGame(true)
-    // delete casualty (find most recent of country and unitType)
-    // updated casualtyTotalValue for country
   }
 
+  const removeCasualty = async () => {
+    setCount(count-1)
+  
+    // update total Casualty Points
+    setCasualtyRoundTotal(casualtyRoundTotal - casualty.value)
+
+    // send delete request to backend
+    let response = await DeleteCasualty(casualty.unitType, country.id)
+
+    // refresh the data, re-render the UI
+    setFetchGame(true)
+  }
+
+useEffect(() => {
+  setCount(0)
+  setCasualtyReset(false)
+
+}, [casualtyReset])
 
   return (
     <div className="border">

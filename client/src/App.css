@@ -60,40 +60,40 @@ body{
 }
 
 /* Header */
-#header{
+#nav-bar{
   /* font-family: Special Elite, Monaco; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: rgb(0,70,0);
   align-items: center;
-  padding: 2rem 0 0 0;
+  padding: 1rem 0 0 0;
 }
 /* #header-image{
   width: 15rem;
   border-radius: 4rem;
 } */
-#header-title{
-  font-size: 4rem;
-  margin: 1rem 0 2rem 0;
+#nav-title{
+  font-size: 2rem;
+  margin: 1rem;
 }
 #nav-options{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /* display: grid; */
+  /* grid-template-columns: repeat(5, 1fr); */
   width: 90vw;
 }
 .nav-option{
   color: white;
-  font-size: 2rem;
+  font-size: 1rem;
   text-decoration: none;
   /* font-weight: bold; */
 }
 .nav-option:hover{
-  font-size: 2.2rem;
+  font-size: 1.1rem;
 }
 .currentPath{
   color: rgb(98,137,231);
-  font-size: 2.2rem;
+  font-size: 1.1rem;
 }
 
 /* Footer */
