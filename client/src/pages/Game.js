@@ -5,6 +5,7 @@ import Country from '../components/Country'
 import CasualtyToStressConversionChart from '../components/CasualtyToStressConversionChart'
 import { UpdateCountry } from '../services/CountryService'
 import { UpdateGame } from '../services/GameService'
+import StressTrack from '../components/StressTrack'
 
 const Game = () => {
   // to do: does it make sense to only keep game specific fields in the game useState? i.e., not keeping nested country and casualty lists? chrome dev tools inspecting components is sluggist. perhaps it's because game useState is holding too much data.
@@ -149,6 +150,7 @@ const Game = () => {
             </div>
           </div>
           <CasualtyToStressConversionChart countries={game.countries} />
+          <StressTrack countries={game.countries} />
           <div id="countries">
             {game.countries?.map((country) => (
               <Country

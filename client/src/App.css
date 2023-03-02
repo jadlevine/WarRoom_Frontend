@@ -17,8 +17,11 @@ body{
 }
 .border{
   border: 1pt solid black;
-  margin: .5rem;
-  padding: .5rem;
+  /* margin: .5rem;
+  padding: .5rem; */
+}
+.dotted-border{
+  border: 1pt dotted black;
 }
 .container{
   margin: 1rem;
@@ -158,6 +161,7 @@ align-self: center;
   grid-area: 3/2/4/3;
 }
 
+/* Casualty to stress conversion*/
 #casualty-to-stress-container{
   background-color: green;
   display: grid;
@@ -165,50 +169,74 @@ align-self: center;
 }
 .c-to-s-conversion-box{
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template: repeat(4, 1fr)/repeat(4, 1fr);
 }
 .stress-area{
+  grid-area:1/1/4/2;
   display: grid;
   grid-template-rows: 1fr 4fr;
 }
-.flags-and-casualty-range-area{
-  display: grid;
-  grid-template-rows: 2fr 1fr;
+.c-to-s-flag-box{
+  grid-area: 1/2/4/5;
 }
-.flag-area{
+.casualty-range-area{
+  grid-area: 4/1/5/5;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+
+/* stress track*/
+.stress-track-container{
+  background-color:darkslateblue;
+}
+.stress-track-boxes{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.stress-track-box{
+  display: grid;
+  grid-template: repeat(5, 1fr)/repeat(3, 1fr);
+}
+.stress-level{
+  grid-area: 1/1/3/2;
+}
+.morale-trigger-flag-box{
+  grid-area: 1/2/3/4;
+  border: 1pt solid black;
+}
+.stress-level-flag-box{
+  grid-area: 3/1/6/4;
+  border: 1pt solid black;
+}
+
+/* flag grid*/
+.flag-grid{
   display: grid;
   grid-template: repeat(3, 1fr)/repeat(3, 1fr);
+  /* border: 1pt solid black; */
 }
-.flag-box{
-  width: 1.5rem;
-}
-.c-to-s-1{
+.flag-box-1{
   grid-area: 1/1;
 }
-.c-to-s-2{
+.flag-box-2{
   grid-area: 1/2;
 }
-.c-to-s-3{
+.flag-box-3{
   grid-area: 1/3;
 }
-.c-to-s-4{
+.flag-box-4{
   grid-area: 2/1;
 }
-.c-to-s-5{
+.flag-box-5{
   grid-area: 2/2;
 }
-.c-to-s-6{
+.flag-box-6{
   grid-area: 2/3;
 }
-.c-to-s-7{
-  grid-area: 3/1;
+.flag-box-7{
+  grid-area: 3/2;
 }
-
-.casualty-range-area{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
 
 
 
