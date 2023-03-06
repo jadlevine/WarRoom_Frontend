@@ -55,6 +55,9 @@ body{
   text-align: start;
   margin: 0 0 0 .75rem;
 }
+.bold{
+  font-weight: bold;
+}
 
 
 /* testing */

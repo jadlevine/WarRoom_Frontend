@@ -88,11 +88,13 @@ const Game = () => {
     console.log('calculation requested')
   }
 
-  const endMoralePhase = () => {
+  // const endMoralePhase = () => {
+  const advanceToNextRound = () => {
     game.battlePhase = true
     game.moralePhase = false
     game.roundNum++
     UpdateGame(game)
+    toggleModal()
     setFetchGame(true)
   }
 
@@ -149,32 +151,43 @@ const Game = () => {
                 </button>
               )}
               {game.moralePhase ? (
-                <button
-                  id="calculate-morale-penalties"
-                  onClick={calculateMoralePenalties}
-                >
-                  Calculate Morale Penalties
-                </button>
-              ) : (
+                // <button
+                //   id="calculate-morale-penalties"
+                //   onClick={calculateMoralePenalties}
+                // >
+                //   Calculate Morale Penalties
+                // </button>
                 // <button id="end-morale-button" onClick={endMoralePhase}>
                 //   End Morale Phase
                 // </button>
-                <button disabled id="calculate-morale-penalties">
-                  Calculate Morale Penalties
+                // <button id="end-morale-button">
+                //   End Morale Phase (I do nothing)
+                // </button>
+                <button id="calculate-morale-penalties" onClick={toggleModal}>
+                  Calculate Morale Penalties MODAL
                 </button>
+              ) : (
+                // <button disabled id="calculate-morale-penalties">
+                //   Calculate Morale Penalties
+                // </button>
                 // <button disabled id="end-morale-button">
                 //   End Morale Phase
                 // </button>
+                <button
+                  disabled
+                  id="calculate-morale-penalties"
+                  onClick={toggleModal}
+                >
+                  Calculate Morale Penalties MODAL
+                </button>
               )}
             </div>
           </div>
-          <button onClick={toggleModal}>
-            Calculate Morale Penalties MODAL
-          </button>
           {showModal && (
             <MoralePenaltyModal
               onClose={toggleModal}
               countries={game.countries}
+              advanceToNextRound={advanceToNextRound}
             />
           )}
           <CasualtyToStressConversionChart countries={game.countries} />

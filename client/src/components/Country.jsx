@@ -35,7 +35,7 @@ const Country = ({country, roundNum, battlePhase, moralePhase, setFetchGame, cas
     return stress - penalty*trigger
   }
 
-  const calculateMoralePenalty = () => {
+  const calculateAdditionalMoralePenalty = () => {
     let penalty = 0
     const stress = country.stressLevel
     const trigger = country.moraleTriggerPoint
@@ -43,7 +43,8 @@ const Country = ({country, roundNum, battlePhase, moralePhase, setFetchGame, cas
       penalty++
       stress -= trigger
     }
-    country.moralePenalty = penalty
+    // country.moralePenalty = penalty
+    return penalty
   }
 
   const handleClick = async (increaseOrDecrease, field, goal) => {
