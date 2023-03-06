@@ -2,6 +2,7 @@ import Axios from 'axios'
 
 // Running BACKEND locally
 export const BASE_URL = process.env.REACT_APP_BASEURL
+// export const BASE_URL = process.env.REACT_APP_BASEURL_NODE
 
 const Client = Axios.create({ baseURL: BASE_URL })
 

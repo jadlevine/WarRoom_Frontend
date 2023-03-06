@@ -6,9 +6,6 @@ const FlagGrid = ({countries, value, equalTo, lowerBoundary, upperBoundary}) => 
 // (equalTo && country[value] === equalTo) ||
   // this line below does not work, because an integer value of ZERO (equalTo=0) evaluates to FALSE... WHYYYY???
 
-  // NEXT UP: refactor casualty to stress conversion chart to use FlagGrid component
-
-
   return (
     <div className="flag-grid">
             {countries?.map((country) => {

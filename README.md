@@ -8,3 +8,4 @@
 - [ ] delete game functionality/button in GameList
 - [ ] reloading page clears Number Sustained for each casualty, so a reload in the middle of battle phase would mess things up
 - [ ] replace window.confirm with something more modern (modal?)
+- [ ] add flag images to render on front end (possibly stored in db?)

@@ -6,6 +6,7 @@ import CasualtyToStressConversionChart from '../components/CasualtyToStressConve
 import { UpdateCountry } from '../services/CountryService'
 import { UpdateGame } from '../services/GameService'
 import StressTrack from '../components/StressTrack'
+import MoralePenaltyModal from '../components/MoralePenaltyModal'
 
 const Game = () => {
   // to do: does it make sense to only keep game specific fields in the game useState? i.e., not keeping nested country and casualty lists? chrome dev tools inspecting components is sluggist. perhaps it's because game useState is holding too much data.
@@ -16,10 +17,15 @@ const Game = () => {
   const [game, setGame] = useState({})
   const [fetchGame, setFetchGame] = useState(true)
   const [casualtyReset, setCasualtyReset] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const getGameDetails = async () => {
     const response = await GetGame(game_id)
     setGame(response)
+  }
+
+  const toggleModal = () => {
+    setShowModal(!showModal)
   }
 
   const endBattlePhase = () => {
@@ -77,6 +83,10 @@ const Game = () => {
     setCasualtyReset(true)
     setFetchGame(true)
   } // end of endBattlePhase
+
+  const calculateMoralePenalties = () => {
+    console.log('calculation requested')
+  }
 
   const endMoralePhase = () => {
     game.battlePhase = true
@@ -139,16 +149,34 @@ const Game = () => {
                 </button>
               )}
               {game.moralePhase ? (
-                <button id="end-morale-button" onClick={endMoralePhase}>
-                  End Morale Phase
+                <button
+                  id="calculate-morale-penalties"
+                  onClick={calculateMoralePenalties}
+                >
+                  Calculate Morale Penalties
                 </button>
               ) : (
-                <button disabled id="end-morale-button">
-                  End Morale Phase
+                // <button id="end-morale-button" onClick={endMoralePhase}>
+                //   End Morale Phase
+                // </button>
+                <button disabled id="calculate-morale-penalties">
+                  Calculate Morale Penalties
                 </button>
+                // <button disabled id="end-morale-button">
+                //   End Morale Phase
+                // </button>
               )}
             </div>
           </div>
+          <button onClick={toggleModal}>
+            Calculate Morale Penalties MODAL
+          </button>
+          {showModal && (
+            <MoralePenaltyModal
+              onClose={toggleModal}
+              countries={game.countries}
+            />
+          )}
           <CasualtyToStressConversionChart countries={game.countries} />
           <StressTrack countries={game.countries} />
           <div id="countries">
