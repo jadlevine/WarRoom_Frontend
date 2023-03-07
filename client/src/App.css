@@ -262,6 +262,9 @@ align-self: center;
   grid-template: repeat(3, 1fr)/repeat(3, 1fr);
   /* border: 1pt solid black; */
 }
+.flag-box{
+  width: 1.5em;
+}
 .flag-box-1{
   grid-area: 1/1;
 }

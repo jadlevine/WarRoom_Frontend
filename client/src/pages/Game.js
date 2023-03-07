@@ -151,28 +151,10 @@ const Game = () => {
                 </button>
               )}
               {game.moralePhase ? (
-                // <button
-                //   id="calculate-morale-penalties"
-                //   onClick={calculateMoralePenalties}
-                // >
-                //   Calculate Morale Penalties
-                // </button>
-                // <button id="end-morale-button" onClick={endMoralePhase}>
-                //   End Morale Phase
-                // </button>
-                // <button id="end-morale-button">
-                //   End Morale Phase (I do nothing)
-                // </button>
                 <button id="calculate-morale-penalties" onClick={toggleModal}>
                   Calculate Morale Penalties MODAL
                 </button>
               ) : (
-                // <button disabled id="calculate-morale-penalties">
-                //   Calculate Morale Penalties
-                // </button>
-                // <button disabled id="end-morale-button">
-                //   End Morale Phase
-                // </button>
                 <button
                   disabled
                   id="calculate-morale-penalties"
