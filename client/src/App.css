@@ -58,6 +58,10 @@ body{
 .bold{
   font-weight: bold;
 }
+.img{
+  max-width: 100%;
+  height: auto;
+}
 
 
 /* testing */
@@ -210,23 +214,26 @@ align-self: center;
 /* Casualty to stress conversion*/
 #casualty-to-stress-container{
   background-color: green;
+}
+#c-to-s-conversion-boxes{
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 }
+
 .c-to-s-conversion-box{
   display: grid;
-  grid-template: repeat(4, 1fr)/repeat(4, 1fr);
+  grid-template: repeat(3, 1fr)/repeat(4, 1fr);
 }
 .stress-area{
-  grid-area:1/1/4/2;
+  grid-area:1/1/3/2;
   display: grid;
-  grid-template-rows: 1fr 4fr;
+  /* grid-template-rows: 1fr 4fr; */
 }
 .c-to-s-flag-box{
-  grid-area: 1/2/4/5;
+  grid-area: 1/2/3/5;
 }
 .casualty-range-area{
-  grid-area: 4/1/5/5;
+  grid-area: 3/1/4/5;
   display: grid;
   grid-template-columns: 1fr 3fr;
 }
@@ -263,7 +270,7 @@ align-self: center;
   /* border: 1pt solid black; */
 }
 .flag-box{
-  width: 1.5em;
+  width: 90%;
 }
 .flag-box-1{
   grid-area: 1/1;

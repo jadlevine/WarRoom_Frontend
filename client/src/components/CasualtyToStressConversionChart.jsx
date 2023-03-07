@@ -14,7 +14,10 @@ const CasualtyToStressConversionChart = ({countries}) => {
 
   return (
     <div id="casualty-to-stress-container" className="container">
-      <div className="right-align border"><span className="red">CASUALTY</span><br></br><span className="smaller">TO</span> STRESS<br></br>CONVERSION</div>
+      {/* <div className="right-align border"><span className="red">CASUALTY</span><br></br><span className="smaller">TO</span> STRESS<br></br>CONVERSION</div> */}
+      <div><span className="red">CASUALTY</span><span className="smaller">TO</span> STRESS CONVERSION</div>
+      <div id="c-to-s-conversion-boxes">
+        
       {conversionValues.map((values)=>(
       <div key={values[0]} className="border c-to-s-conversion-box">
         <div className="stress-area dotted-border">
@@ -25,7 +28,6 @@ const CasualtyToStressConversionChart = ({countries}) => {
           <FlagGrid
             countries={countries}
             value="casualtyTotalValue"
-            equalTo={null}
             lowerBoundary={values[1]}
             upperBoundary={values[2]}
           />
@@ -40,6 +42,7 @@ const CasualtyToStressConversionChart = ({countries}) => {
         </div>
       </div>
       ))}
+      </div>
     </div>
   )
 }
